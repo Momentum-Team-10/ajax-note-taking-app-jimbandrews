@@ -28,3 +28,26 @@ function renderNoteText(li, noteObj) {
 
 
 listNotes()
+
+
+function createNote(noteText) {
+    fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json',  },
+        body: JSON.stringify({
+            title: noteText,
+            body: noteText,
+            created_at: moment().format()
+        })
+    })
+    .then(res => res.json())
+    .then(data => renderNoteCard(data))
+}
+
+let form = document.getElementById("note-form")
+
+form.addEventListener('submit', (e) => {
+    e.preventDefault()
+    const noteText = document.getElementById('note-text').value
+    console.log(noteText)
+})
