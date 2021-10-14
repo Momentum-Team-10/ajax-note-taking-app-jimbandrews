@@ -6,7 +6,7 @@ function listNotes() {
         .then(res => res.json())
         .then(data => {
             for (let item of data) {
-                renderNoteItem(item);
+                renderNoteCard(item);
             }
         })
 }
