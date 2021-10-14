@@ -58,4 +58,25 @@ function createNote(noteText) {
     .then(data => renderNoteCard(data))
 }
 
+function deleteNote(noteEl) {
+    fetch(url + '/' + `${noteEl.id}`, {
+        method: 'DELETE'
+    }).then(() => noteEl.parentElement.remove())
+}
 
+function updateNote(noteEl) {
+    const noteText = document.getElementById(note-text).value
+    fetch(url + '/' + `${noteEl.parentElement.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            title: noteText,
+            body: noteText,
+            updated_at: moment().format()
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        renderNoteText(noteEl.parentElement, data)
+    })
+}
