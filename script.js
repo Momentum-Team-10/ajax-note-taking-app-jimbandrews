@@ -80,3 +80,7 @@ function updateNote(noteEl) {
         renderNoteText(noteEl.parentElement, data)
     })
 }
+
+
+// <i class="fa-duotone fa-trash-can"></i> --> trashcan icon for delete
+// <i class="fa-duotone fa-square-pen"></i> --> pen icon for edit
