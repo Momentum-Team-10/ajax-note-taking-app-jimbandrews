@@ -12,11 +12,11 @@ function listNotes() {
         })
 }
 
-// takes a .json object and creates a list item with id as the json title
+// takes a .json object and creates a list item with id the same as the json
 // uses renderNoteText and then adds li to ul
 function renderNoteCard(noteObj) {
     const li = document.createElement('li');
-    li.id = noteObj.title
+    li.id = noteObj.id
     renderNoteText(li, noteObj)
     container.appendChild(li);
 }
