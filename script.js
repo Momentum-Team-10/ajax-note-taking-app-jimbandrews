@@ -1,5 +1,22 @@
 const url = "http://localhost:3000/notes";
 const container = document.getElementById("container")
+const form = document.getElementById("note-form")
+
+// calls listNotes function and displays stored notes
+listNotes()
+
+// When the save note button is clicked, 
+form.addEventListener('submit', (e) => {
+    e.preventDefault()
+    const noteText = document.getElementById('note-text').value
+    if (noteText === "") {
+        form.reset()
+    } else {
+        createNote(noteText)
+        form.reset()
+    }
+})
+
 
 // use fetch to get an array of .json objects
 function listNotes() {
@@ -27,9 +44,6 @@ function renderNoteText(li, noteObj) {
 }
 
 
-listNotes()
-
-
 function createNote(noteText) {
     fetch(url, {
         method: 'POST',
@@ -44,10 +58,4 @@ function createNote(noteText) {
     .then(data => renderNoteCard(data))
 }
 
-let form = document.getElementById("note-form")
 
-form.addEventListener('submit', (e) => {
-    e.preventDefault()
-    const noteText = document.getElementById('note-text').value
-    console.log(noteText)
-})
