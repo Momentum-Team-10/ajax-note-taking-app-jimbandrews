@@ -23,6 +23,7 @@ noteList.addEventListener('click', (e) => {
         deleteNote(e.target)
     } else if (e.target.classList.contains('edit')) {
         updateNote(e.target)
+        form.reset()
     }
 })
 
@@ -70,20 +71,23 @@ function createNote(noteText) {
 }
 
 function deleteNote(noteEl) {
-    fetch(url + '/' + `${noteEl.id}`, {
-        method: 'DELETE'
+    fetch(url + '/' + `${noteEl.parentElement.id}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type' : 'application/json'
+        }
     }).then(() => noteEl.parentElement.remove())
 }
 
 function updateNote(noteEl) {
-    const noteText = document.getElementById(note-text).value
+    const noteText = document.getElementById("note-text").value
     fetch(url + '/' + `${noteEl.parentElement.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             title: noteText,
             body: noteText,
-            updated_at: moment().format()
+            created_at: moment().format()
         })
     })
     .then(res => res.json())
