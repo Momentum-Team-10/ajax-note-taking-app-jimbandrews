@@ -40,7 +40,9 @@ function renderNoteCard(noteObj) {
 
 // adds .json object's body to innerText of list item
 function renderNoteText(li, noteObj) {
-    li.innerText = `${noteObj.body}`
+    li.innerHTML = `
+        <span>${noteObj.body}</span> (${noteObj.created_at ? moment(noteObj.created_at).format('MMM D, YYYY') : ""}) <i class="fas fa-pencil-alt"></i> <i class="far fa-trash-alt"></i>
+    `
 }
 
 
