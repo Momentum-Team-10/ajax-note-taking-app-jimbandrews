@@ -5,7 +5,7 @@ const form = document.getElementById("note-form")
 // calls listNotes function and displays stored notes
 listNotes()
 
-// When the save note button is clicked, 
+// When the save note button is clicked, a note is created and saved to db.json
 form.addEventListener('submit', (e) => {
     e.preventDefault()
     const noteText = document.getElementById('note-text').value
@@ -17,7 +17,7 @@ form.addEventListener('submit', (e) => {
     }
 })
 
-
+// when pen or trashcan isons are clicked, note is updated or deleted, respectively
 noteList.addEventListener('click', (e) => {
     if (e.target.classList.contains('delete')) {
         deleteNote(e.target)
@@ -55,7 +55,7 @@ function renderNoteText(li, noteObj) {
     `
 }
 
-
+// adds inputed text to json as an element with an id and timestamp, then rerenders all the saved notes
 function createNote(noteText) {
     fetch(url, {
         method: 'POST',
@@ -70,6 +70,7 @@ function createNote(noteText) {
     .then(data => renderNoteCard(data))
 }
 
+// deletes the parent element of the parameter from db.json
 function deleteNote(noteEl) {
     fetch(url + '/' + `${noteEl.parentElement.id}`, {
         method: 'DELETE',
@@ -79,6 +80,7 @@ function deleteNote(noteEl) {
     }).then(() => noteEl.parentElement.remove())
 }
 
+// updates indicated note and saves that to db.json, then rerenders notes
 function updateNote(noteEl) {
     const noteText = document.getElementById("note-text").value
     fetch(url + '/' + `${noteEl.parentElement.id}`, {
@@ -95,7 +97,3 @@ function updateNote(noteEl) {
         renderNoteText(noteEl.parentElement, data)
     })
 }
-
-
-// <i class="fa-duotone fa-trash-can"></i> --> trashcan icon for delete
-// <i class="fa-duotone fa-square-pen"></i> --> pen icon for edit
