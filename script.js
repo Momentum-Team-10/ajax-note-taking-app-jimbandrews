@@ -1,5 +1,5 @@
 const url = "http://localhost:3000/notes";
-const container = document.getElementById("container")
+const noteList = document.getElementById("note-list")
 const form = document.getElementById("note-form")
 
 // calls listNotes function and displays stored notes
@@ -14,6 +14,15 @@ form.addEventListener('submit', (e) => {
     } else {
         createNote(noteText)
         form.reset()
+    }
+})
+
+
+noteList.addEventListener('click', (e) => {
+    if (e.target.classList.contains('delete')) {
+        deleteNote(e.target)
+    } else if (e.target.classList.contains('edit')) {
+        updateNote(e.target)
     }
 })
 
@@ -35,13 +44,13 @@ function renderNoteCard(noteObj) {
     const li = document.createElement('li');
     li.id = noteObj.id
     renderNoteText(li, noteObj)
-    container.appendChild(li);
+    noteList.appendChild(li);
 }
 
 // adds .json object's body to innerText of list item
 function renderNoteText(li, noteObj) {
     li.innerHTML = `
-        <span>${noteObj.body}</span> (${noteObj.created_at ? moment(noteObj.created_at).format('MMM D, YYYY') : ""}) <i class="fas fa-pencil-alt"></i> <i class="far fa-trash-alt"></i>
+        <span>${noteObj.body}</span> (${noteObj.created_at ? moment(noteObj.created_at).format('MMM D, YYYY') : ""}) <i class="fas fa-pencil-alt edit"></i> <i class="far fa-trash-alt delete"></i>
     `
 }
 
@@ -49,7 +58,7 @@ function renderNoteText(li, noteObj) {
 function createNote(noteText) {
     fetch(url, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json',  },
+        headers: { 'Content-Type': 'application/json'},
         body: JSON.stringify({
             title: noteText,
             body: noteText,
