@@ -52,7 +52,8 @@ function renderNoteCard(noteObj) {
     noteCard.id = noteObj.id
     noteCard.classList.add(
         'message',
-        'is-info'
+        'is-info',
+        "block"
     )
     renderNoteText(noteCard, noteObj)
     noteDiv.appendChild(noteCard);
@@ -63,7 +64,7 @@ function renderNoteText(noteCard, noteObj) {
     const header = document.createElement('div');
     header.classList.add("message-header");
     header.innerHTML = `
-        ${noteObj.created_at ? moment(noteObj.created_at).format('h:mm a  MMM Do, YYYY') : ""} <button class="edit button is-primary is-light">Edit</button> <button class="delete"></button>
+        ${noteObj.created_at ? moment(noteObj.created_at).format('h:mm a  MMM Do, YYYY') : ""} <button class="edit button is-primary is-light is-small">Edit</button> <button class="delete"></button>
     `
     const body = document.createElement('div');
     body.classList.add("message-body");
