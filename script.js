@@ -1,5 +1,5 @@
 const url = "http://localhost:3000/notes";
-const noteList = document.getElementById("note-list")
+const noteDiv = document.getElementById("note-div")
 const form = document.getElementById("note-form")
 
 
@@ -19,7 +19,7 @@ form.addEventListener('submit', (e) => {
 })
 
 // when pen or trashcan isons are clicked, note is updated or deleted, respectively
-noteList.addEventListener('click', (e) => {
+noteDiv.addEventListener('click', (e) => {
     if (e.target.classList.contains('delete')) {
         deleteNote(e.target)
     } else if (e.target.classList.contains('edit')) {
@@ -48,21 +48,29 @@ function listNotes() {
 // takes a .json object and creates a list item with id the same as the json
 // uses renderNoteText and then adds li to ul
 function renderNoteCard(noteObj) {
-    const li = document.createElement('li');
-    li.id = noteObj.id
-    // li.classList.add(
-    //     'message',
-    //     'is-info'
-    // )
-    renderNoteText(li, noteObj)
-    noteList.appendChild(li);
+    const noteCard = document.createElement('article');
+    noteCard.id = noteObj.id
+    noteCard.classList.add(
+        'message',
+        'is-info'
+    )
+    renderNoteText(noteCard, noteObj)
+    noteDiv.appendChild(noteCard);
 }
 
 // adds .json object's body to innerText of list item
-function renderNoteText(li, noteObj) {
-    li.innerHTML = `
-        <span>${noteObj.body}</span> (${noteObj.created_at ? moment(noteObj.created_at).format('MMM D, YYYY') : ""}) <i class="fas fa-pencil-alt edit"></i> <i class="far fa-trash-alt delete"></i>
+function renderNoteText(noteCard, noteObj) {
+    const header = document.createElement('div');
+    header.classList.add("message-header");
+    header.innerHTML = `
+        ${noteObj.created_at ? moment(noteObj.created_at).format('h:mm a  MMM Do, YYYY') : ""} <button class="edit button is-primary is-light">Edit</button> <button class="delete"></button>
     `
+    const body = document.createElement('div');
+    body.classList.add("message-body");
+    body.innerText = noteObj.body;
+
+    noteCard.appendChild(header)
+    noteCard.appendChild(body)
 }
 
 // adds inputed text to json as an element with an id and timestamp, then rerenders all the saved notes
@@ -82,18 +90,20 @@ function createNote(noteText) {
 
 // deletes the parent element of the parameter from db.json
 function deleteNote(noteEl) {
-    fetch(url + '/' + `${noteEl.parentElement.id}`, {
+    const header = noteEl.parentElement;
+    fetch(url + '/' + `${header.parentElement.id}`, {
         method: 'DELETE',
         headers: {
             'Content-Type' : 'application/json'
         }
-    }).then(() => noteEl.parentElement.remove())
+    }).then(() => header.parentElement.remove())
 }
 
 // updates indicated note and saves that to db.json, then rerenders notes
 function updateNote(noteEl) {
     const noteText = document.getElementById("note-text").value
-    fetch(url + '/' + `${noteEl.parentElement.id}`, {
+    const header = noteEl.parentElement;
+    fetch(url + '/' + `${header.parentElement.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -104,6 +114,6 @@ function updateNote(noteEl) {
     })
     .then(res => res.json())
     .then(data => {
-        renderNoteText(noteEl.parentElement, data)
+        renderNoteText(header.parentElement, data)
     })
 }
