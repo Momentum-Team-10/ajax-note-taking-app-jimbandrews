@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Notes</title>
+  <link rel="stylesheet" href="node_modules/bulma/css/bulma.css">
   <script src="https://kit.fontawesome.com/ab411acc25.js" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
   <script src="script.js" defer></script>
@@ -15,12 +16,13 @@
   <h1>Notes</h1>
   <form id="note-form">
     <div class="form-field">
-      <input id="note-text" placeholder="Enter your note here" />
+      <textarea placeholder="Enter your note here" cols="40" rows="8" wrap="hard"></textarea>
     </div>
     <div class="form-field">
-      <button id="save-note" type="submit">Save Note</button>
+      <button class="button is-primary" id="save-note" type="submit">Save Note</button>
     </div>
   </form>
+  <br>
   <ul id="note-list"></ul>
 </body>
 

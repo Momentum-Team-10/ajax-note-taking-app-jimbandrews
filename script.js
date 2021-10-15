@@ -2,6 +2,7 @@ const url = "http://localhost:3000/notes";
 const noteList = document.getElementById("note-list")
 const form = document.getElementById("note-form")
 
+
 // calls listNotes function and displays stored notes
 listNotes()
 
@@ -22,8 +23,13 @@ noteList.addEventListener('click', (e) => {
     if (e.target.classList.contains('delete')) {
         deleteNote(e.target)
     } else if (e.target.classList.contains('edit')) {
-        updateNote(e.target)
-        form.reset()
+        const noteText = document.getElementById('note-text').value
+        if (noteText === "") {
+            form.reset()
+        } else {
+            updateNote(e.target)
+            form.reset()
+        }
     }
 })
 
@@ -44,6 +50,10 @@ function listNotes() {
 function renderNoteCard(noteObj) {
     const li = document.createElement('li');
     li.id = noteObj.id
+    // li.classList.add(
+    //     'message',
+    //     'is-info'
+    // )
     renderNoteText(li, noteObj)
     noteList.appendChild(li);
 }
