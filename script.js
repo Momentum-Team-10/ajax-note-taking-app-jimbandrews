@@ -59,8 +59,14 @@ function renderNoteCard(noteObj) {
     noteDiv.appendChild(noteCard);
 }
 
-// adds .json object's body to innerText of list item
+// adds .json object's body to innerText of body section of article node, and create time to innerText of header section
+// checks if article node already contains children, and removes them if so
 function renderNoteText(noteCard, noteObj) {
+    if (noteCard.hasChildNodes()) {
+        while (noteCard.hasChildNodes()) {
+            noteCard.firstChild.remove()
+        }
+    }
     const header = document.createElement('div');
     header.classList.add("message-header");
     header.innerHTML = `
