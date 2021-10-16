@@ -4,5 +4,15 @@
 } */
 
 article{
-    max-width: 300px;
+    width: 300px;
+    margin-right: 10px;
+}
+
+form {
+    margin-left: 80px;
+    max-width: 600px;
+}
+
+#save-note {
+    margin-left: 40px;
 }

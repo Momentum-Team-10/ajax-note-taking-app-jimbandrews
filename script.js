@@ -34,6 +34,20 @@ noteDiv.addEventListener('click', (e) => {
 })
 
 
+// mouseover event listener for edit icon
+// these events do not work at all
+editIcons = document.querySelectorAll('.icon')
+for (let button of editIcons) {
+    button.addEventListener('mouseover', () => {
+        button.style.color = '#000000';
+        button.style.cursor = 'pointer';
+    })
+
+    button.addEventListener('mouseout', () => {
+        button.style.color = '#ffffff'
+    })
+}
+
 // use fetch to get an array of .json objects
 function listNotes() {
     fetch(url)
@@ -52,7 +66,7 @@ function renderNoteCard(noteObj) {
     noteCard.id = noteObj.id
     noteCard.classList.add(
         'message',
-        'is-info',
+        'is-link',
         "block"
     )
     renderNoteText(noteCard, noteObj)
@@ -68,9 +82,9 @@ function renderNoteText(noteCard, noteObj) {
         }
     }
     const header = document.createElement('div');
-    header.classList.add("message-header");
+    header.classList.add("message-header", "is-size-6");
     header.innerHTML = `
-        ${noteObj.created_at ? moment(noteObj.created_at).format('h:mm a  MMM Do, YYYY') : ""} <button class="edit button is-primary is-light is-small">Edit</button> <button class="delete"></button>
+        ${noteObj.created_at ? moment(noteObj.created_at).format('h:mm a  MM/D/YYYY') : ""} <div><div class="icon"><i class="fas fa-edit edit"></i></div> <button class="delete is-medium"></button></div>
     `
     const body = document.createElement('div');
     body.classList.add("message-body");
@@ -97,7 +111,8 @@ function createNote(noteText) {
 
 // deletes the parent element of the parameter from db.json
 function deleteNote(noteEl) {
-    const header = noteEl.parentElement;
+    const buttonDiv = noteEl.parentElement;
+    const header = buttonDiv.parentElement;
     fetch(url + '/' + `${header.parentElement.id}`, {
         method: 'DELETE',
         headers: {
@@ -109,7 +124,9 @@ function deleteNote(noteEl) {
 // updates indicated note and saves that to db.json, then rerenders notes
 function updateNote(noteEl) {
     const noteText = document.getElementById("note-text").value
-    const header = noteEl.parentElement;
+    const iconDiv = noteEl.parentElement;
+    const buttonDiv = iconDiv.parentElement;
+    const header = buttonDiv.parentElement
     fetch(url + '/' + `${header.parentElement.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -124,3 +141,5 @@ function updateNote(noteEl) {
         renderNoteText(header.parentElement, data)
     })
 }
+
+// <button class="edit button is-primary is-light is-small">Edit</button>
