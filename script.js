@@ -33,20 +33,43 @@ noteDiv.addEventListener('click', (e) => {
     }
 })
 
+// changes pointer style and icon font color when mouse passes over edit icon 
+// and changes pointer style when mouse passes over note body; reverts after 
+noteDiv.addEventListener("mouseover", (e) => {
+    if (e.target.classList.contains('edit')) {
+        e.target.style.color = '#dddddd'
+        document.body.style.cursor = 'pointer';
+    }
+    if (e.target.classList.contains('message-body')) {
+        document.body.style.cursor = 'auto';
+    }
+})
 
-// mouseover event listener for edit icon
-// these events do not work at all
-editIcons = document.querySelectorAll('.icon')
-for (let button of editIcons) {
-    button.addEventListener('mouseover', () => {
-        button.style.color = '#000000';
-        button.style.cursor = 'pointer';
-    })
+noteDiv.addEventListener("mouseout", (e) => {
+    if (e.target.classList.contains('edit')) {
+        e.target.style.color = "#ffffff";
+        document.body.style.cursor = "default";
+    }
+    if (e.target.classList.contains('message-body')) {
+        document.body.style.cursor = 'default';
+    }
+})
 
-    button.addEventListener('mouseout', () => {
-        button.style.color = '#ffffff'
-    })
-}
+
+// makes icon color darker when clicked down, reverts back after click is released
+noteDiv.addEventListener("mousedown", (e) => {
+    if (e.target.classList.contains('edit')) {
+        e.target.style.color = "#bbbbbb";
+    }
+})
+
+noteDiv.addEventListener("mouseup", (e) => {
+    if (e.target.classList.contains('edit')) {
+        e.target.style.color = "#dddddd";
+    }
+})
+
+
 
 // use fetch to get an array of .json objects
 function listNotes() {
@@ -141,5 +164,3 @@ function updateNote(noteEl) {
         renderNoteText(header.parentElement, data)
     })
 }
-
-// <button class="edit button is-primary is-light is-small">Edit</button>
