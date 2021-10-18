@@ -106,12 +106,12 @@ function renderNoteText(noteCard, noteObj) {
     }
 
     const header = document.createElement('div');
-    header.classList.add("message-header", "is-size-6");
+    header.classList.add("message-header", "is-size-6", randomDarkBackColor(), randomLightTextColor());
     header.innerHTML = `
         ${noteObj.created_at ? moment(noteObj.created_at).format('h:mm a  MM/D/YYYY') : ""} <div><div class="icon"><i class="fas fa-edit edit"></i></div> <button class="delete is-medium"></button></div>
     `
     const body = document.createElement('div');
-    body.classList.add("message-body");
+    body.classList.add("message-body", randomLightBackColor(), randomDarkTextColor());
     body.innerText = noteObj.body;
 
     noteCard.appendChild(header)
@@ -167,11 +167,9 @@ function updateNote(noteEl) {
 }
 
 // exactly what it sounds like
-function randomColor() {
+function randomDarkBackColor() {
     const colors = [
-        "has-background-white",
         "has-background-black",
-        "has-background-light",
         "has-background-dark",
         "has-background-primary",
         "has-background-link",
@@ -179,12 +177,6 @@ function randomColor() {
         "has-background-success",
         "has-background-warning",
         "has-background-danger",
-        "has-background-primary-light",
-        "has-background-link-light",
-        "has-background-info-light",
-        "has-background-success-light",
-        "has-background-warning-light",
-        "has-background-danger-light",
         "has-background-primary-dark",
         "has-background-link-dark",
         "has-background-info-dark",
@@ -194,4 +186,49 @@ function randomColor() {
     ];
     let index = Math.floor(Math.random()*colors.length);
     return colors[index];
+}
+
+function randomLightBackColor() {
+    let colors = [
+        "has-background-white",
+        "has-background-light",
+        "has-background-primary",
+        "has-background-warning",
+        "has-background-primary-light",
+        "has-background-link-light",
+        "has-background-info-light",
+        "has-background-success-light",
+        "has-background-warning-light",
+        "has-background-danger-light"
+    ];
+    let index = Math.floor(Math.random()*colors.length);
+    return colors[index];
+}
+
+function randomDarkTextColor() {
+    let colors = [
+        "has-text-dark",
+        "has-text-danger",
+        "has-text-primary-dark",
+        "has-text-link-dark",
+        "has-text-info-dark",
+        "has-text-success-dark",
+        "has-text-warning-dark",
+        "has-text-danger-dark",
+    ]
+    let index = Math.floor(Math.random()*colors.length);
+    return colors[index];
+}
+
+function randomLightTextColor() {
+    let colors = [
+        "has-text-light",
+        "has-text-white",
+        "has-text-primary-light",
+        "has-text-link-light",
+        "has-text-info-light",
+        "has-text-success-light",
+        "has-text-warning-light",
+        "has-text-danger-light",
+    ]
 }
