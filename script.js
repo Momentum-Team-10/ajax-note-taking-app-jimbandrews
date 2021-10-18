@@ -104,6 +104,7 @@ function renderNoteText(noteCard, noteObj) {
             noteCard.firstChild.remove()
         }
     }
+
     const header = document.createElement('div');
     header.classList.add("message-header", "is-size-6");
     header.innerHTML = `
@@ -163,4 +164,34 @@ function updateNote(noteEl) {
     .then(data => {
         renderNoteText(header.parentElement, data)
     })
+}
+
+// exactly what it sounds like
+function randomColor() {
+    const colors = [
+        "has-background-white",
+        "has-background-black",
+        "has-background-light",
+        "has-background-dark",
+        "has-background-primary",
+        "has-background-link",
+        "has-background-info",
+        "has-background-success",
+        "has-background-warning",
+        "has-background-danger",
+        "has-background-primary-light",
+        "has-background-link-light",
+        "has-background-info-light",
+        "has-background-success-light",
+        "has-background-warning-light",
+        "has-background-danger-light",
+        "has-background-primary-dark",
+        "has-background-link-dark",
+        "has-background-info-dark",
+        "has-background-success-dark",
+        "has-background-warning-dark",
+        "has-background-danger-dark"
+    ];
+    let index = Math.floor(Math.random()*colors.length);
+    return colors[index];
 }
